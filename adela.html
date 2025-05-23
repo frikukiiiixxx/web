@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanThreads - Moda Urbana</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0;
+            background: #1c1c1c;
+        }
+
+        header {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #e0e0e0;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .title img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-nav a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: #555;
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            transition: width 0.3s;
+        }
+
+        .header-nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .hero-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #e0e0e0;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #888, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin: 15px 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-primary {
+            background: #666;
+            color: #e0e0e0;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            font-weight: 700;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #555;
+            transform: translateY(-3px);
+        }
+
+        .btn-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #e0e0e0;
+            border: none;
+            border-radius: 50%;
+            padding: 12px;
+            cursor: pointer;
+            z-index: 2;
+            font-size: 22px;
+            transition: background 0.3s;
+        }
+
+        .btn-arrow.left {
+            left: 20px;
+        }
+
+        .btn-arrow.right {
+            right: 20px;
+        }
+
+        .btn-arrow:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #e0e0e0;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background: #2c2c2c;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            border: 5px solid #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.7) 70%);
+        }
+
+        .product-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .offer-card {
+            background: #2c2c2c;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            width: 250px;
+            margin: 10px;
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .offer-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .offer-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .offer-card .offer-details {
+            margin-top: 10px;
+        }
+
+        .offer-card h3 {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .offer-card p {
+            font-size: 14px;
+            color: #bbb;
+            margin-top: 5px;
+        }
+
+        .new-arrivals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .new-arrival-card {
+            background: #2c2c2c;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            width: 300px;
+            margin: 10px;
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .new-arrival-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .new-arrival-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .new-arrival-card .details {
+            margin-top: 10px;
+        }
+
+        .new-arrival-card h3 {
+            font-size: 20px;
+            color: #e0e0e0;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .new-arrival-card p {
+            font-size: 16px;
+            color: #bbb;
+            margin-top: 5px;
+        }
+
+        footer {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #666;
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 22px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-to-top:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="title">
+                <img src="imagen/logo.png" alt="Logo">
+                UrbanThreads
+            </div>
+            <nav class="header-nav">
+                <a href="#home">Inicio</a>
+                <a href="nosotros.html">Sobre Nosotros</a>
+                <a href="#offers">Ofertas</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="login2.html">CERRAR SESION</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-images">
+            <img src="imagen/sexual.png" alt="Imagen 1" class="slide">
+            <img src="imagen/ima1.png" alt="Imagen 1" class="slide">
+            <img src="imagenes/mami.png" alt="Imagen 2" class="slide">
+            <img src="imagen/ima2.png" alt="Imagen 2" class="slide">
+            <img src="imagen/ima3.png" alt="Imagen 3" class="slide">
+        </div>
+        <div class="hero-content">
+            <h1>UrbanThreads</h1>
+            <p>La moda urbana que define tu estilo</p>
+            <a href="adela.php" class="btn-primary">Ver Productos</a>
+        </div>
+        <button class="btn-arrow left" onclick="prevSlide()">&#10094;</button>
+        <button class="btn-arrow right" onclick="nextSlide()">&#10095;</button>
+    </section>
+    <div class="container" id="about">
+    <div class="section-title">
+        <h2>Sobre Nosotros</h2>
+        <p>En UrbanThreads, ofrecemos las últimas tendencias en moda urbana. Conócenos mejor a través de nuestra misión y servicios.</p>
+    </div>
+    <div class="about-cards">
+        <div class="about-card">
+            <img src="imagen/nosotros1.png" alt="Misión">
+            <h3>Nuestra Misión</h3>
+            <p>Proporcionar a nuestros clientes una experiencia de compra excepcional, ofreciendo productos que combinan estilo y comodidad.</p>
+        </div>
+        <div class="about-card">
+            <img src="imagen/nosotros2.png" alt="Envío Rápido">
+            <h3>Envío Rápido</h3>
+            <p>Envíos a todo el país, con opciones estándar y exprés. Todos los pedidos son rastreables.</p>
+        </div>
+        <div class="about-card">
+            <img src="imagen/nosotros3.png" alt="Política de Devoluciones">
+            <h3>Política de Devoluciones</h3>
+            <p>Devuelve tu compra dentro de los 30 días si no estás completamente satisfecho.</p>
+        </div>
+        <div class="about-card">
+            <img src="imagen/nosotros4.png" alt="Atención al Cliente">
+            <h3>Atención al Cliente</h3>
+            <p>Nuestro equipo está listo para ayudarte. Contáctanos con cualquier pregunta o inquietud.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .about-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+    }
+
+    .about-card {
+        background: #2c2c2c;
+        border-radius: 10px;
+        padding: 20px;
+        width: 250px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-card img {
+        width: 80px;
+        margin-bottom: 15px;
+    }
+
+    .about-card h3 {
+        font-size: 20px;
+        color: #e0e0e0;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .about-card p {
+        font-size: 16px;
+        color: #bbb;
+    }
+
+    .about-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fadeInElements = document.querySelectorAll('.fade-in');
+
+        function handleScroll() {
+            fadeInElements.forEach(function (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Para asegurarse de que los elementos visibles al cargar se animen
+    });
+</script>
+
+
+    
+
+    <div class="container" id="offers">
+        <div class="section-title">
+            <h2>Ofertas Especiales</h2>
+            <p>Aprovecha nuestras ofertas exclusivas en productos seleccionados.</p>
+        </div>
+        <div class="product-grid">
+            <div class="offer-card">
+                <img src="imagen/sudaderaini.png" alt="Oferta 1">
+                <div class="offer-details">
+                    <h3>Sudadera Especial</h3>
+                    <p>Sudadera con diseño exclusivo, 30% de descuento.</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="imagen/gorraini.png" alt="Oferta 2">
+                <div class="offer-details">
+                    <h3>Playera Edicion Limitada</h3>
+                    <p>Playera de temporada, 20% de descuento.</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="imagen/pantalonini.png" alt="Oferta 3">
+                <div class="offer-details">
+                    <h3>Pantalon de Temporada</h3>
+                    <p>Playera de edición limitada, 25% de descuento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="new-arrivals">
+        <div class="section-title">
+            <h2>Novedades</h2>
+            <p>Descubre nuestras últimas colecciones y productos recién llegados.</p>
+        </div>
+        <div class="new-arrivals">
+            <div class="new-arrival-card">
+                <img src="imagen/premium.png" alt="Novedad 1">
+                <div class="details">
+                    <h3>Nueva Colección Otoño</h3>
+                    <p>Explora la nueva colección de moda para esta temporada.</p>
+                </div>
+            </div>
+            <div class="new-arrival-card">
+                <img src="imagen/otoño.png" alt="Novedad 2">
+                <div class="details">
+                    <h3>Ropa Casual Premium</h3>
+                    <p>Descubre nuestra línea de ropa casual con calidad premium.</p>
+                </div>
+            </div>
+            <div class="new-arrival-card">
+                <img src="imagen/accesorio.png" alt="Novedad 3">
+                <div class="details">
+                    <h3>Accesorios Exclusivos</h3>
+                    <p>Nuevos accesorios que complementarán tu estilo único.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 UrbanThreads. Todos los derechos reservados. Diseñado por LaLocura
+    </footer>
+
+    <a href="#" class="back-to-top" onclick="scrollToTop()">
+        &#9650;
+    </a>
+
+    <script>
+
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.hero-images img');
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.hero-images img');
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            const slides = document.querySelectorAll('.hero-images img');
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initial slide
+        showSlide(currentIndex);
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    </script>
+
+</body> 

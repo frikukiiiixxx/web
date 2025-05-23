@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanThreads - Comprar Accesorios</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-color: #000;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .header img {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+        }
+        .header .title {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #aab7b8;
+        }
+        .cart-icon {
+            cursor: pointer;
+            font-size: 24px;
+            position: relative;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .product-item {
+            width: 350px;
+            background-color: #444;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-item h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .carousel-images img {
+            width: 350px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .carousel-button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .size, .color {
+            margin: 10px 0;
+        }
+        .size button, .color button, .characteristics-button {
+            padding: 5px 10px;
+            margin: 2px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .size button.active, .color button.active {
+            border-color: #aab7b8;
+            background-color: #333;
+        }
+        .color-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        .color-options button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .color-options button.active {
+            border: 2px solid #aab7b8;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .characteristics-modal, .cart-modal {
+            background: #555;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        .close-modal {
+            background: #c0392b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .cart-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #aab7b8;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+   <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanThreads</title>
+    <style>
+        /* Agrega tus estilos aquí */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">
+            <img src="imagen/logo.png" alt="Logo">
+            <span style="font-size: 24px; font-weight: bold;">UrbanThreads</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Método de Pago</a>
+            <span class="cart-icon" id="cart-icon">&#128722;</span>
+            <a href="adela.html">Inicio</a>
+
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="product-container">
+            <!-- Producto 1 -->
+            <div class="product-item" id="product-item1">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/pantalon1.png" alt="Accesorio 1 - Imagen 1">
+                        <img src="imagen/pantalon2.png" alt="Accesorio 1 - Imagen 2">
+                        <img src="imagen/pantalon3.png" alt="Accesorio 1 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev1">&#10094;</button>
+                        <button class="carousel-button" id="next1">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Jeans skater</h3>
+                <div class="price">MXN 899.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart1">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: lightcyan;" data-color="#E0FFFF"></button>
+                        <button class="color navy" style="background-color: darkcyan;" data-color="darkcyan"></button>
+                        <button class="color olive" style="background-color: darkolivegreen;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="product-item" id="product-item2">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/pantalon4.png" alt="Accesorio 2 - Imagen 1">
+                        <img src="imagen/pantalon5.png" alt="Accesorio 2 - Imagen 2">
+                        <img src="imagen/pantalon6.png" alt="Accesorio 2 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev2">&#10094;</button>
+                        <button class="carousel-button" id="next2">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Jeans baggy print</h3>
+                <div class="price">MXN 1,199.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart2">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: darkslategray;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: tan;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: steelblue;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="product-item" id="product-item3">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/pantalon7.png" alt="Accesorio 3 - Imagen 1">
+                        <img src="imagen/pantalon9.png" alt="Accesorio 3 - Imagen 2">
+                        <img src="imagen/pantalon8.png" alt="Accesorio 3 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev3">&#10094;</button>
+                        <button class="carousel-button" id="next3">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Jeans cargo baggy</h3>
+                <div class="price">MXN 900.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart3">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="product-item" id="product-item4">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/pantalon10.png" alt="Accesorio 4 - Imagen 1">
+                        <img src="imagen/pantalon11.png" alt="Accesorio 4 - Imagen 2">
+                        <img src="imagen/pantalon12.png" alt="Accesorio 4 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev4">&#10094;</button>
+                        <button class="carousel-button" id="next4">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Jeans baggy estrellas</h3>
+                <div class="price">MXN 1299.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart4">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="product-item" id="product-item5">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/pantalon13.png" alt="Accesorio 5 - Imagen 1">
+                        <img src="imagen/pantalon14.png" alt="Accesorio 5 - Imagen 2">
+                        <img src="imagen/pantalon15.png" alt="Accesorio 5 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev5">&#10094;</button>
+                        <button class="carousel-button" id="next5">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Jeans loose baggy</h3>
+                <div class="price">MXN 899.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart5">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="product-item" id="product-item6">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/gorra16.png" alt="Accesorio 6 - Imagen 1">
+                        <img src="imagen/gorra17.png" alt="Accesorio 6 - Imagen 2">
+                        <img src="imagen/gorra18.png" alt="Accesorio 6 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev6">&#10094;</button>
+                        <button class="carousel-button" id="next6">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Gorra Retro</h3>
+                <div class="price">MXN 749.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart6">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 7 -->
+            <div class="product-item" id="product-item7">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/gorra19.png" alt="Accesorio 7 - Imagen 1">
+                        <img src="imagen/gorra20.png" alt="Accesorio 7 - Imagen 2">
+                        <img src="imagen/gorra21.png" alt="Accesorio 7 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev7">&#10094;</button>
+                        <button class="carousel-button" id="next7">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Gorra Clásica</h3>
+                <div class="price">MXN 599.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart7">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 8 -->
+            <div class="product-item" id="product-item8">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/gorra22.png" alt="Accesorio 8 - Imagen 1">
+                        <img src="imagen/gorra23.png" alt="Accesorio 8 - Imagen 2">
+                        <img src="imagen/gorra24.png" alt="Accesorio 8 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev8">&#10094;</button>
+                        <button class="carousel-button" id="next8">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Gorra de Verano</h3>
+                <div class="price">MXN 549.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart8">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+
+            <!-- Producto 9 -->
+            <div class="product-item" id="product-item9">
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <img src="imagen/gorra25.png" alt="Accesorio 9 - Imagen 1">
+                        <img src="imagen/gorra26.png" alt="Accesorio 9 - Imagen 2">
+                        <img src="imagen/gorra27.png" alt="Accesorio 9 - Imagen 3">
+                    </div>
+                    <div class="carousel-buttons">
+                        <button class="carousel-button" id="prev9">&#10094;</button>
+                        <button class="carousel-button" id="next9">&#10095;</button>
+                    </div>
+                </div>
+                <h3>Gorra Estilo Urbano</h3>
+                <div class="price">MXN 699.00</div>
+                <div class="size">
+                    <label>Talla:</label>
+                    <button class="size" data-size="s">S</button>
+                    <button class="size" data-size="m">M</button>
+                    <button class="size" data-size="l">L</button>
+                    <button class="size" data-size="xl">XL</button>
+                    <button class="cart-button" id="cart9">&#128722;</button>
+                </div>
+                <div class="color">
+                    <label>Color:</label>
+                    <div class="color-options">
+                        <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+                        <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+                        <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+                        <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+                    </div>
+                </div>
+                <button class="characteristics-button">Características</button>
+            </div>
+        </div>
+        <div class="cart-message" id="cart-message"></div>
+        <!-- Producto 10 -->
+        <div class="product-item" id="product-item10">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="imagen/gorra28.png" alt="Accesorio 10 - Imagen 1">
+            <img src="imagen/gorra29.png" alt="Accesorio 10 - Imagen 2">
+            <img src="imagen/gorra30.png" alt="Accesorio 10 - Imagen 3">
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button" id="prev10">&#10094;</button>
+            <button class="carousel-button" id="next10">&#10095;</button>
+        </div>
+    </div>
+    <h3>Gorra Deportivo</h3>
+    <div class="price">MXN 599.00</div>
+    <div class="size">
+        <label>Talla:</label>
+        <button class="size" data-size="s">S</button>
+        <button class="size" data-size="m">M</button>
+        <button class="size" data-size="l">L</button>
+        <button class="size" data-size="xl">XL</button>
+        <button class="cart-button" id="cart10">&#128722;</button>
+    </div>
+    <div class="color">
+        <label>Color:</label>
+        <div class="color-options">
+            <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+            <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+            <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+            <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+        </div>
+    </div>
+    <button class="characteristics-button">Características</button>
+</div>
+
+<!-- Producto 11 -->
+<div class="product-item" id="product-item11">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="imagen/gorra31.png" alt="Accesorio 11 - Imagen 1">
+            <img src="imagen/gorra32.png" alt="Accesorio 11 - Imagen 2">
+            <img src="imagen/gorra33.png" alt="Accesorio 11 - Imagen 3">
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button" id="prev11">&#10094;</button>
+            <button class="carousel-button" id="next11">&#10095;</button>
+        </div>
+    </div>
+    <h3>Gorra Casual</h3>
+    <div class="price">MXN 499.00</div>
+    <div class="size">
+        <label>Talla:</label>
+        <button class="size" data-size="s">S</button>
+        <button class="size" data-size="m">M</button>
+        <button class="size" data-size="l">L</button>
+        <button class="size" data-size="xl">XL</button>
+        <button class="cart-button" id="cart11">&#128722;</button>
+    </div>
+    <div class="color">
+        <label>Color:</label>
+        <div class="color-options">
+            <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+            <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+            <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+            <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+        </div>
+    </div>
+    <button class="characteristics-button">Características</button>
+</div>
+
+<!-- Producto 12 -->
+<div class="product-item" id="product-item12">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="imagen/gorra34.png" alt="Accesorio 12 - Imagen 1">
+            <img src="imagen/gorra35.png" alt="Accesorio 12 - Imagen 2">
+            <img src="imagen/gorra36.png" alt="Accesorio 12 - Imagen 3">
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button" id="prev12">&#10094;</button>
+            <button class="carousel-button" id="next12">&#10095;</button>
+        </div>
+    </div>
+    <h3>Gorra de Invierno</h3>
+    <div class="price">MXN 799.00</div>
+    <div class="size">
+        <label>Talla:</label>
+        <button class="size" data-size="s">S</button>
+        <button class="size" data-size="m">M</button>
+        <button class="size" data-size="l">L</button>
+        <button class="size" data-size="xl">XL</button>
+        <button class="cart-button" id="cart12">&#128722;</button>
+    </div>
+    <div class="color">
+        <label>Color:</label>
+        <div class="color-options">
+            <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+            <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+            <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+            <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+        </div>
+    </div>
+    <button class="characteristics-button">Características</button>
+</div>
+
+<!-- Producto 13 -->
+<div class="product-item" id="product-item13">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="imagen/gorra37.png" alt="Accesorio 13 - Imagen 1">
+            <img src="imagen/gorra38.png" alt="Accesorio 13 - Imagen 2">
+            <img src="imagen/gorra39.png" alt="Accesorio 13 - Imagen 3">
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button" id="prev13">&#10094;</button>
+            <button class="carousel-button" id="next13">&#10095;</button>
+        </div>
+    </div>
+    <h3>Gorra de Viaje</h3>
+    <div class="price">MXN 649.00</div>
+    <div class="size">
+        <label>Talla:</label>
+        <button class="size" data-size="s">S</button>
+        <button class="size" data-size="m">M</button>
+        <button class="size" data-size="l">L</button>
+        <button class="size" data-size="xl">XL</button>
+        <button class="cart-button" id="cart13">&#128722;</button>
+    </div>
+    <div class="color">
+        <label>Color:</label>
+        <div class="color-options">
+            <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+            <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+            <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+            <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+        </div>
+    </div>
+    <button class="characteristics-button">Características</button>
+</div>
+
+<!-- Producto 14 -->
+<div class="product-item" id="product-item14">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="imagen/gorra40.png" alt="Accesorio 14 - Imagen 1">
+            <img src="imagen/gorra41.png" alt="Accesorio 14 - Imagen 2">
+            <img src="imagen/gorra42.png" alt="Accesorio 14 - Imagen 3">
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button" id="prev14">&#10094;</button>
+            <button class="carousel-button" id="next14">&#10095;</button>
+        </div>
+    </div>
+    <h3>Gorra de Fiesta</h3>
+    <div class="price">MXN 899.00</div>
+    <div class="size">
+        <label>Talla:</label>
+        <button class="size" data-size="s">S</button>
+        <button class="size" data-size="m">M</button>
+        <button class="size" data-size="l">L</button>
+        <button class="size" data-size="xl">XL</button>
+        <button class="cart-button" id="cart14">&#128722;</button>
+    </div>
+    <div class="color">
+        <label>Color:</label>
+        <div class="color-options">
+            <button class="color gray" style="background-color: gray;" data-color="gray"></button>
+            <button class="color navy" style="background-color: navy;" data-color="navy"></button>
+            <button class="color olive" style="background-color: olive;" data-color="olive"></button>
+            <button class="color beige" style="background-color: beige;" data-color="beige"></button>
+        </div>
+    </div>
+    <button class="characteristics-button">Características</button>
+</div>
+
+
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="characteristics-modal" id="characteristics-modal">
+            <h3>Características del Producto</h3>
+            <p id="characteristics-text"></p>
+            <button class="close-modal" id="close-modal">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="cart-modal-overlay">
+        <div class="cart-modal" id="cart-modal">
+            <h3>Tu Carrito</h3>
+            <div id="cart-items"></div>
+            <button class="close-modal" id="close-cart-modal">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para el carrusel de imágenes
+        const carousels = document.querySelectorAll('.carousel');
+        carousels.forEach((carousel, index) => {
+            const images = carousel.querySelector('.carousel-images');
+            const prevButton = document.getElementById(`prev${index + 1}`);
+            const nextButton = document.getElementById(`next${index + 1}`);
+            let currentIndex = 0;
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex === 0) ? 2 : currentIndex - 1;
+                images.style.transform = `translateX(-${currentIndex * 100}%)`;
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex === 2) ? 0 : currentIndex + 1;
+                images.style.transform = `translateX(-${currentIndex * 100}%)`;
+            });
+        });
+
+        // Lógica para seleccionar talla
+        const sizeButtons = document.querySelectorAll('.size button');
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const sizeGroup = button.closest('.size').querySelectorAll('button');
+                sizeGroup.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Lógica para seleccionar color
+        const colorButtons = document.querySelectorAll('.color button');
+        colorButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const colorGroup = button.closest('.color').querySelectorAll('button');
+                colorGroup.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                colorGroup.forEach(btn => btn.style.border = 'none');
+                button.style.border = '2px solid #aab7b8';
+            });
+        });
+
+        // Lógica para mostrar características
+        const characteristicsButtons = document.querySelectorAll('.characteristics-button');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const characteristicsModal = document.getElementById('characteristics-modal');
+        const characteristicsText = document.getElementById('characteristics-text');
+
+        characteristicsButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const productName = button.parentElement.querySelector('h3').innerText;
+                characteristicsText.innerText = `Características de ${productName}: Material: 100% algodón, Tamaño ajustable.`;
+                modalOverlay.style.display = 'flex';
+            });
+        });
+
+        // Cerrar modal de características
+        document.getElementById('close-modal').addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Lógica para agregar al carrito
+        const cartButtons = document.querySelectorAll('.cart-button');
+        const cartMessage = document.getElementById('cart-message');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartModalOverlay = document.getElementById('cart-modal-overlay');
+        const cartItems = [];
+
+        cartButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const productItem = button.closest('.product-item');
+                const productName = productItem.querySelector('h3').innerText;
+                const selectedSize = productItem.querySelector('.size button.active')?.dataset.size || 'No seleccionada';
+                const selectedColor = productItem.querySelector('.color button.active')?.dataset.color || 'No seleccionada';
+                const productImage = productItem.querySelector('.carousel-images img').src;
+
+                const item = {
+                    name: productName,
+                    size: selectedSize,
+                    color: selectedColor,
+                    image: productImage
+                };
+                cartItems.push(item);
+                cartMessage.innerHTML = `Producto: ${productName}<br>Color: ${selectedColor}<br>Talla: ${selectedSize}`;
+            });
+        });
+
+        // Lógica para mostrar el carrito
+        document.getElementById('cart-icon').addEventListener('click', () => {
+            cartItemsContainer.innerHTML = '';
+            cartItems.forEach(item => {
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <p>Producto: ${item.name}</p>
+                            <p>Color: ${item.color}</p>
+                            <p>Talla: ${item.size}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            cartModalOverlay.style.display = 'flex';
+        });
+
+        // Cerrar modal del carrito
+        document.getElementById('close-cart-modal').addEventListener('click', () => {
+            cartModalOverlay.style.display = 'none';
+        });
+
+        // Cerrar modal al hacer clic fuera de él
+        cartModalOverlay.addEventListener('click', (e) => {
+            if (e.target === cartModalOverlay) {
+                cartModalOverlay.style.display = 'none';
+            }
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanThreads - Nosotros</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            background-color: #eaeaea; /* Fondo gris claro */
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff; /* Fondo blanco para la cabecera */
+            color: #333;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header .title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header .title img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .header .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav-links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 15px; /* Espaciado más amplio */
+            font-weight: 700;
+            position: relative;
+            padding: 5px 0; /* Espacio para el efecto de subrayado */
+            transition: color 0.3s, transform 0.3s; /* Animaciones suaves */
+        }
+
+        .header .nav-links a:hover {
+            color: #555; /* Gris más oscuro en hover */
+            transform: scale(1.05); /* Efecto de escala en hover */
+        }
+
+        .container {
+            margin-top: 80px; /* Espacio para la cabecera fija */
+            padding: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff; /* Fondo blanco para la sección principal */
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .container h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: #444; /* Gris oscuro */
+            margin-bottom: 20px;
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555; /* Gris oscuro */
+        }
+
+        .container input, .container textarea, .container select {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc; /* Borde gris claro */
+            border-radius: 8px;
+            background-color: #f9f9f9; /* Fondo gris muy claro */
+            color: #333; /* Color de texto oscuro */
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .container input:focus, .container textarea:focus, .container select:focus {
+            border-color: #888; /* Gris más oscuro al enfocar */
+            outline: none;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #444; /* Gris oscuro */
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .container button:hover {
+            background-color: #555; /* Gris medio en hover */
+            transform: scale(1.02);
+        }
+
+        .container button:active {
+            background-color: #333; /* Gris más oscuro al hacer clic */
+        }
+
+        .back-button {
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #444; /* Gris oscuro */
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .back-button:hover {
+            background-color: #555; /* Gris medio en hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">
+            <img src="imagen/logo.png" alt="Logo">
+            UrbanThreads
+        </div>
+        <div class="nav-links">
+            <a href="nosotros.html">Nosotros</a>
+            <a href="metododepago.html">Método de Pago</a>
+            <a href="adela.html">Inicio</a>
+            <a href="servicios.html">Servicios</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="carrito.html">Carrito</a> <!-- Enlace al carrito de compras -->
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Conócenos</h1>
+        <form id="contact-form">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
+
+            <label for="phone">Número de Teléfono:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Tu número de teléfono" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+
+            <label for="reason">Motivo de Contacto:</label>
+            <select id="reason" name="reason" required>
+                <option value="" disabled selected>Selecciona un motivo</option>
+                <option value="consulta">Consulta</option>
+                <option value="sugerencia">Sugerencia</option>
+                <option value="reclamo">Reclamo</option>
+            </select>
+
+            <label for="message">Mensaje:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tu mensaje" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <button class="back-button" onclick="window.location.href='index.html'">Regresar al Inicio</button>
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Formulario enviado. Gracias por contactarnos.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+  <style> 
+    body {
+      font-family: 'Verdana', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #111;
+      color: #ddd;
+    }
+    .navbar {
+      width: 100%;
+      background-color: #333;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 32px;
+      font-family: 'Arial Black', sans-serif;
+      margin-right: 20px;
+    }
+    .navbar img {
+      height: 50px;
+      width: auto;
+    }
+    .background-carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: url('imagen/ladrillosfondo.png') repeat-x;
+      background-size: cover;
+      background-attachment: fixed;
+      animation: scrollBackground 30s linear infinite;
+    }
+    @keyframes scrollBackground {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 0; }
+    }
+    .navbar-carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url('imagen/logosolo.png') repeat-x;
+      background-size: auto 100%;
+      animation: scrollHeader 15s linear infinite;
+    }
+    @keyframes scrollHeader {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 0; }
+    }
+    .tabs {
+      display: flex;
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+      border-bottom: 2px solid #666;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 14px 0;
+      cursor: pointer;
+      background-color: #444;
+    }
+    .tab:hover {
+      background-color: #555;
+    }
+    .tab.active {
+      background-color: #333;
+      border-bottom: 2px solid #fff;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 140px;
+      width: 90%;
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+      margin-left: auto;
+      margin-right: auto;
+      height: 60vh;
+      opacity: 0;
+      animation: slideIn 1s forwards;
+    }
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .login-image-container {
+      width: 50%;
+      height: 100%;
+      background-image: url('imagen/inicio.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    .form-container {
+      width: 50%;
+      padding: 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: 2px solid #555;
+      transition: border-color 0.3s ease;
+    }
+    .form-container:focus-within {
+      border-color: #0056b3;
+    }
+    .form-container h2 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #eee;
+    }
+    .form-container p {
+      font-size: 16px;
+      color: #ccc;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: normal;
+      color: #eee;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #555;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 18px;
+      background-color: #333;
+      color: #ddd;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #0056b3;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .form-group button:hover {
+      background-color: #004494;
+    }
+    .switch-form {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .switch-form a {
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .switch-form a:hover {
+      text-decoration: underline;
+    }
+    .logo {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      width: 50px;
+      height: auto;
+      background: url('imagen/logo.png') no-repeat center center;
+      background-size: contain;
+      z-index: 1000;
+    }
+    .sidebar-buttons {
+      position: fixed;
+      right: 20px;
+      top: 140px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sidebar-buttons button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0056b3;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .sidebar-buttons button:hover {
+      background-color: #004494;
+      transform: scale(1.05);
+    }
+    .recaptcha-container {
+      display: flex;
+      justify-content: center; 
+      margin: 20px 0; 
+    }
+
+    /* Animación flotante y color azul para el botón "Registrate" */
+    .switch-form button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff; /* Azul claro */
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      animation: float 2s infinite ease-in-out; /* Animación flotante */
+    }
+
+    /* Animación flotante */
+    @keyframes float {
+      0% {
+        transform: translateY(0); /* Posición inicial */
+      }
+      50% {
+        transform: translateY(-10px); /* Levantamiento */
+      }
+      100% {
+        transform: translateY(0); /* Vuelve a la posición original */
+      }
+    }
+
+    .switch-form button:hover {
+      background-color: #0056b3; /* Azul oscuro al pasar el mouse */
+      transform: scale(1.05); /* Efecto de escala al pasar el mouse */
+    }
+  </style>
+</head>
+<body>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <div class="navbar">
+    <h1></h1>
+    <img src="imagen/logosolo.png" alt="Imagen de Cabecera">
+    <div class="navbar-carousel"></div>
+  </div>
+
+  <div class="background-carousel"></div>
+
+  <div class="container">
+    <div class="login-image-container"></div>
+
+    <div class="form-container" id="login-form">
+      <h2>Iniciar Sesión</h2>
+      <form action="validate.php" method="POST">
+
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" name="username" placeholder="Ingresar Usuario" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="Ingresar Contraseña" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Iniciar Sesión</button>
+        </div>
+        <div class="switch-form">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+
+  <div class="sidebar-buttons">
+    <button onclick="window.location.href='login.html';">Administración</button>
+    <button onclick="window.location.href='login2.html';">Comercio</button>
+  </div>
+
+  <script>
+    document.getElementById('switch-to-register').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Funcionalidad de registro aún no implementada.');
+    });
+  </script>
+</body>
+</html>
